@@ -4,8 +4,9 @@ import './closebutton.scss';
 
 class CloseButton extends React.PureComponent {
     render() {
+        const {closeSidebar} = this.props;
         return (
-            <div className={`Sidebar-close-button ${extractCommonClasses(this.props)}`} onClick={this.closeSidebar}>
+            <div className={`Sidebar-close-button ${extractCommonClasses(this.props)}`} onClick={closeSidebar}>
                 <p>X</p>
             </div>
         )
