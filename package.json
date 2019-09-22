@@ -5,6 +5,10 @@
   "description": "React Sidebar for Oubli npm package",
   "main": "./lib/index.js",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Oubli/React-Sidebar"
+  },
   "scripts": {
     "build": "webpack"
   },

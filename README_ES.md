@@ -1,30 +1,49 @@
-# React Theme
-React Theme es un contexto qye provee de toda la información relevante en materia de estilo al resto
-de componentes de la librería de Oubli. Los componentes de Oubli son
-capaces de **funcionar sin necesidad de implementar esta librería** pero cualquier cambia general de estilo y propiedades
-que se quiera realizar sobre ellos, se puede hacer mediante este contexto.
+### Idiomas
+* [SPA](./README_ES.md)
+* [ENG](./README.md)
+
+# React Background Image
+
+React Sidebar is a component ready to work as a side sidebar (in future versions also horizontal) 
+that includes the possibility of displacement from the right or from the left.
+
+It is still under development, but is fully functional for basic projects.
+
+The opening state of the component must be controlled from outside. 
 
 ## Instalación
 
 ```$xslt
-npm install @oubli/react-theme --save
+npm install @oubli/react-sidebar --save
 ```
 
 ## Uso
-TODO
+El uso es realmente sencillo, sólo debes importar la librería
+e incluir dentro del componente los elementos que quieras mostrar en su interior.
 
 ```javascript
 import React from 'react';
-import {ThemeProvider, ThemeConsumer} from '@oubli/react-theme'
+import Sidebar from '@oubli/react-sidebar'
 
+const Example = (props) => (
+    <Sidebar
+        position={'right'}
+        open={true}
+    >
+        <section>
+            <p>The inside</p>
+        </section>
+    </Sidebar>
+)
 ```
 
 
 # Propiedades
 | Name          | Default       | Description  |
 | ------------- |:-------------:| ------------:|
-
-
+| position           | 'left'          |  |
+| open           | false      |  |
 
 ## A tener en cuenta
-TODO
+Sólo acepta un elemento react en su interior, 
+por lo que si quieres renderizar más, debe estar envuelto en una etiqueta.
