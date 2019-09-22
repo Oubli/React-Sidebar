@@ -5,19 +5,7 @@ import CloseButton from './Components/CloseButton/index.jsx';
 import './sidebar.scss';
 import { extractCommonClasses } from "./Helpers/index.js";
 
-class Sidebar extends React.Component{
-    constructor(props){
-        super(props);
-        this.state={
-            open: false
-        };
-    }
-
-    componentDidUpdate(prevProps){
-        if(this.props.open !== prevProps.open && this.state.open !== this.props.open)
-            this.setState({ open: this.props.open }, this.handleOverflowPage)
-    }
-
+class Sidebar extends React.PureComponent{
     handleOverflowPage = () => {
         // if(this.state.open) {
         //     document.getElementById('root').style.overflow = "hidden";
@@ -40,8 +28,7 @@ class Sidebar extends React.Component{
     };
 
     rebuildChildren = () => {
-        const { children, position } = this.props;
-        const { open } = this.state;
+        const { children, position, open } = this.props;
         if(children) {
             const newProps = {
                 open,
@@ -55,8 +42,7 @@ class Sidebar extends React.Component{
     };
 
     render(){
-        const { open } = this.state;
-        const { position } = this.props;
+        const { position, open } = this.props;
         const commonClasses = extractCommonClasses({open, position});
 
         return(
