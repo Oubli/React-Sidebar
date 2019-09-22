@@ -1,0 +1,33 @@
+.Sidebar-close-button{
+  width: 24px;
+  height: 46px;
+  top: 20px;
+  background: rgba(255,255,255,0.85);
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  transform: translateX(500px);
+  transition: transform 100ms;
+
+  &.open{
+    transform: translateX(0px);
+    cursor: pointer;
+  }
+
+  &.right {
+    right: 438px;
+  }
+
+  &.left {
+    left: 438px;
+  }
+
+  /** Childs **/
+
+  & > div{
+    color: #666 !important;
+    font-size: 24px !important;
+  }
+}
