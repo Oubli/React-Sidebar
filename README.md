@@ -43,4 +43,5 @@ const Example = (props) => (
 | open           | false      |  |
 
 ## Tips 
-The parent container should have a defined height and width, if this is not likely to cause problems.
+It only accepts one react element inside, 
+so if you want to render more, it must be wrapped in a label.
