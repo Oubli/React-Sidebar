@@ -1,16 +1,11 @@
 import React from 'react';
+import { extractCommonClasses } from '../../Helpers/index.js'
 import './closebutton.scss';
 
 class CloseButton extends React.PureComponent {
     render() {
-        const { position, open } = this.props;
-        const classes = {
-            open: open ? 'open' : 'close',
-            position: position === 'right' ? 'right' : 'left'
-        };
-        console.log(Object.values(classes));
         return (
-            <div className={`Sidebar-close-button ${open ? 'open' : 'close'}`} onClick={this.closeSidebar}>
+            <div className={`Sidebar-close-button ${extractCommonClasses(this.props)}`} onClick={this.closeSidebar}>
                 <p>X</p>
             </div>
         )
