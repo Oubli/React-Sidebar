@@ -2,14 +2,13 @@
 * [ESP](./README_ES.md)
 * [ING](./README.md)
 
-# React Background Image
-React Sidebar es un componente listo para funcionar como sidebar lateral 
-( en futuras versiones también  horizontal ) que incluye la posibilidad de desplazamiento 
-desde la derecha o desde la izquierda.
+# React Sidebar
+React Sidebar is a component ready to work as a side sidebar (in future versions also horizontal) 
+that includes the possibility of displacement from the right or from the left.
 
-Aún está en desarrollo, pero es plenamente funcional para proyectos básicos.
+It is still under development, but is fully functional for basic projects.
 
-El estado de apertura del componente debe ser controlado desde fuera. 
+The opening state of the component must be controlled from outside. 
 
 ## How to Install
 
