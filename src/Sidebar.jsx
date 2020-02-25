@@ -1,79 +1,69 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import {ThemeConsumer} from '@oubli/react-theme';
-import CloseButton from './Components/CloseButton/index.jsx';
-import './sidebar.scss';
-import { extractCommonClasses } from "./Helpers/index.js";
+import React, { useState, useEffect } from 'react';
+import Portal from '../Portal';
+import './Sidebar.scss';
 
-class Sidebar extends React.PureComponent{
-    handleOverflowPage = () => {
-        // if(this.state.open) {
-        //     document.getElementById('root').style.overflow = "hidden";
-        //     document.getElementsByTagName('body')[0].style.overflow = "hidden";
-        //     document.getElementsByTagName('html')[0].style.overflow = "hidden";
-        // }
-        // else {
-        //     document.getElementById('root').style.overflow = "";
-        //     document.getElementsByTagName('body')[0].style.overflow = "";
-        //     document.getElementsByTagName('html')[0].style.overflow = "";
-        // }
-    };
+export const SIDEBAR_STATES = {
+    'OPENING': 'OPENING',
+    'CLOSING': 'CLOSING',
+    'OPENED': 'OPENED',
+    'CLOSED': 'CLOSED',
+}
 
-    closeSidebar = () => {
-        this.props.closeSidebarFn && this.props.closeSidebarFn()
-    };
+const SidebarPortal = ({
+    position,
+    onOpen,
+    onClose,
+    rootId,
+    isOpen,
+    children
+}) => {
+    const [status, setStatus] = useState(SIDEBAR_STATES.CLOSED);
 
-    openSidebar = () => {
-        this.props.openSidebarFn && this.props.openSidebarFn()
-    };
+    const handleOpen = () => {
+        if (status !== SIDEBAR_STATES.OPENED) {
+            onOpen();
+            setStatus(SIDEBAR_STATES.OPENING);
+            setTimeout(() => setStatus(SIDEBAR_STATES.OPENED), 100)
+        }
+    }
 
-    rebuildChildren = () => {
-        const { children, position, open } = this.props;
-        if(children) {
-            const newProps = {
-                open,
-                closeSidebar: this.closeSidebar,
-                openSidebar: this.openSidebar,
-                positionSidebar: position,
-            };
+    const handleClose = () => {
+        if (status !== SIDEBAR_STATES.CLOSED) {
+            onClose();
+            setStatus(SIDEBAR_STATES.CLOSING);
+            setTimeout(() => setStatus(SIDEBAR_STATES.CLOSED), 300)
+        }
+    }
 
-            return React.cloneElement(children, newProps)
-        } else return null;
-    };
+    useEffect(() => { isOpen ? handleOpen() : handleClose(); }, [isOpen]);
+    useEffect(() => {
+        const BodyEl = document.querySelector('body');
+        console.log(status, 'status !== SIDEBAR_STATES.CLOSED', status !== SIDEBAR_STATES.CLOSED ? 'hidden' : undefined)
+        if (BodyEl) {
+            BodyEl.style.overflow = status !== SIDEBAR_STATES.CLOSED ? 'hidden' : '';
+            return () => BodyEl.style.overflow = ''
+        }
+    }, [status]);
 
-    render(){
-        const { position, open } = this.props;
-        const commonClasses = extractCommonClasses({open, position});
-
-        return(
-            <div className={`Sidebar-Wrapper ${commonClasses}`}>
-                <CloseButton
-                    open={open}
-                    position={position}
-                    closeSidebar={this.closeSidebar}
-                />
+    return status !== SIDEBAR_STATES.CLOSED && (
+        <Portal id={rootId}>
+            <div className={'Sidebar-Blanket'} onClickCapture={onClose} />
+            <div className={`Sidebar-Wrapper ${status} ${position}`}>
+                {/* <CloseButton onClick={onClose} /> */}
                 <div className={`Sidebar-Content`}>
-                    { this.rebuildChildren() }
+                    {children}
                 </div>
             </div>
-        )
-    }
+        </Portal>
+    )
 }
 
-Sidebar.defaultProps = {
+SidebarPortal.defaultProps = {
     position: 'right',
-    closeSidebarFn: ()=>{},
-    openSidebarFn: ()=>{}
-};
-
-
-
-class SidebarPortal extends React.Component {
-    render(){
-        const container = document.getElementById('root');
-        return container ? ReactDOM.createPortal(<Sidebar {...this.props} />, container) : null
-
-    }
+    isOpen: false,
+    onOpen: () => { },
+    onClose: () => { },
+    rootId: 'root'
 }
 
-export default ThemeConsumer(SidebarPortal)
+export default SidebarPortal;
